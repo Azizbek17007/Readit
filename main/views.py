@@ -62,22 +62,31 @@ def article_detail_view(request, pk):
     cats = Category.objects.all()
     recent_posts = Post.objects.all().order_by('-created_at')[:3]
     comments = Comment.objects.filter(post__id=pk).order_by('-id')
+
     if request.method == 'POST':
         form = CommentForm(request.POST, request.FILES)
         if form.is_valid():
-            # comment = form.save(commit=False)
-            # comment.post = post
-            # comment.save()
             form.save()
             return redirect(f'/blog/{post.id}')
+
     tag = request.GET.get('tag')
     if tag:
         post = Post.objects.filter(tags__name=tag)
-    context = {'post': post,
-               'tags': tags,
-               'cats': cats,
-               'comments': comments,
-               'recent_posts': recent_posts,
-               'form': form,
-               }
+
+    search_query = request.GET.get('q')
+    if search_query:
+        search_results = Post.objects.filter(title__icontains=search_query) | Post.objects.filter(
+            content__icontains=search_query)
+    else:
+        search_results = None
+
+    context = {
+        'post': post,
+        'tags': tags,
+        'cats': cats,
+        'comments': comments,
+        'recent_posts': recent_posts,
+        'form': form,
+        'search_results': search_results,
+    }
     return render(request, 'blog-single.html', context)

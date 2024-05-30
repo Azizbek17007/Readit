@@ -30,6 +30,19 @@
     {% endfor %}
 </div>
 </div>
+    <form method="GET" action="{% url 'article_detail_view' pk=post.id %}">
+    <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if search_results %}
+    <h2>Search Results:</h2>
+    <ul>
+    {% for result in search_results %}
+        <li><a href="{% url 'article_detail_view' pk=result.id %}">{{ result.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
 <div class="about-author d-flex p-4 bg-light">
 <div class="bio mr-5">
 <img src="{% static 'images/person_1.jpg' %}" alt="Image placeholder" class="img-fluid mb-4">
