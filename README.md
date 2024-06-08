@@ -1,13 +1,3 @@
-# ReadIt
-this is our first blog site with frontend
-
-## Pagination
-# Moose-Blog-Site
-This is Moose simple blog site with django mvt
-
-## Pagination Django Function-based-view(FBV)
-Function-based view (FBV) uchun pagination kodi yozish uchun quyidagi misolni ko'rib chiqamiz. Ushbu misolda Paginator va PageNotAnInteger bilan birlashgan holda, yozuvlar ro'yxatini sahifalarga bo'lish funksiyasi (post_list) kiritilgan.
-```python
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from main.forms import CommentForm
